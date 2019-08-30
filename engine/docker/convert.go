@@ -22,6 +22,7 @@ import (
 	"docker.io/go-docker/api/types/container"
 	"docker.io/go-docker/api/types/mount"
 	"docker.io/go-docker/api/types/network"
+	"docker.io/go-docker/api/types/strslice"
 )
 
 // returns a container configuration.
@@ -76,6 +77,7 @@ func toHostConfig(spec *engine.Spec, step *engine.Step) *container.HostConfig {
 			Type: "json-file",
 		},
 		Privileged: step.Docker.Privileged,
+		CapAdd: strslice.StrSlice{"SYS_PTRACE"},
 		// TODO(bradrydzewski) set ShmSize
 	}
 	// windows does not support privileged so we hard-code
